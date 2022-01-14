@@ -114,4 +114,4 @@ dmypy.json
 .pyre/
 
 /results
-/metafile
+/metadata

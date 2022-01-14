@@ -13,7 +13,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text">Iterations</span>
                                             </div>
                                             <input id='maxiter' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                 min="100" value="500" step="50">
                                         </div>
                                     </div>
@@ -31,7 +31,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text bg-danger text-light">R</span>
                                             </div>
                                             <input id='color-R' type="number" class="form-control"
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
+                                                onchange="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
                                                 maxlength="4" min="0" max="1" step="0.01">
                                         </div>
                                         <div class="input-group mb-3">
@@ -40,7 +40,7 @@ $(document).ready(() => {
                                                     class="input-group-text bg-success text-light">G</span>
                                             </div>
                                             <input id='color-G' type="number" class="form-control"
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
+                                                onchange="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
                                                 maxlength="4" min="0" max="1" step="0.01">
                                         </div>
                                         <div class="input-group mb-3">
@@ -49,7 +49,7 @@ $(document).ready(() => {
                                                     class="input-group-text bg-primary text-light">B</span>
                                             </div>
                                             <input id="color-B" type="number" class="form-control"
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
+                                                onchange="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
                                                 maxlength="4" min="0" max="1" step="0.01">
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text">x1</span>
                                             </div>
                                             <input id='x1' type="number" class="form-control"
-                                                oninput="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                onchange="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                 min="-2" max="1" onchange="calY2()" onkeyup="calY2()">
                                         </div>
                                         <div class="input-group mb-3">
@@ -75,7 +75,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text">x2</span>
                                             </div>
                                             <input id='x2' type="number" class="form-control"
-                                                oninput="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                onchange="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                 min="-2" max="1" onchange="calY2()" onkeyup="calY2()">
                                         </div>
                                         <div class="input-group mb-3">
@@ -83,7 +83,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text">y1</span>
                                             </div>
                                             <input id='y1' type="number" class="form-control"
-                                                oninput="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                onchange="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                 min="-1" max="1" onchange="calY2()" onkeyup="calY2()">
                                         </div>
                                         <div class="input-group mb-3">
@@ -106,7 +106,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text">Iterations</span>
                                             </div>
                                             <input id='maxiter' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                 min="100" value="500" step="50">
                                         </div>
                                         <div class="input-group mb-3">
@@ -114,24 +114,24 @@ $(document).ready(() => {
                                                 <span class="input-group-text">StripeS</span>
                                             </div>
                                             <input id='stripeS' type="number" class="form-control"
-                                                oninput="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
-                                                min="0" max="10" step="1">
+                                                onchange="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                min="0" max="32" step="1">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">NCycle</span>
                                             </div>
                                             <input id='ncycle' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
-                                                min="1" step="1">
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min; if(Number(this.value) > Number(this.max)) this.value = this.max;"
+                                                min="1" step="1" max="200">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">StepS</span>
                                             </div>
                                             <input id='stepS' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
-                                                min="0">
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min; if(Number(this.value) > Number(this.max)) this.value = this.max;"
+                                                min="0" max="100" step="1">
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text bg-danger text-light">R</span>
                                             </div>
                                             <input id='color-R' type="number" class="form-control"
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
+                                                onchange="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
                                                 maxlength="4" min="0" max="1" step="0.01">
                                         </div>
                                         <div class="input-group mb-3">
@@ -157,7 +157,7 @@ $(document).ready(() => {
                                                     class="input-group-text bg-success text-light">G</span>
                                             </div>
                                             <input id='color-G' type="number" class="form-control"
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
+                                                onchange="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
                                                 maxlength="4" min="0" max="1" step="0.01">
                                         </div>
                                         <div class="input-group mb-3">
@@ -166,7 +166,7 @@ $(document).ready(() => {
                                                     class="input-group-text bg-primary text-light">B</span>
                                             </div>
                                             <input id="color-B" type="number" class="form-control"
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
+                                                onchange="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); if(Number(this.value) > Number(this.max)) this.value = 1; if(Number(this.value) < Number(this.min)) this.value=0;"
                                                 maxlength="4" min="0" max="1" step="0.01">
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@ $(document).ready(() => {
                                                 <span class="input-group-text">Iterations</span>
                                             </div>
                                             <input id='maxiter' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                 min="100" value="500" step="50">
                                         </div>
                                         <div class="input-group mb-3">
@@ -191,24 +191,24 @@ $(document).ready(() => {
                                                 <span class="input-group-text">StripeS</span>
                                             </div>
                                             <input id='stripeS' type="number" class="form-control"
-                                                oninput="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
-                                                min="0" max="10" step="1">
+                                                onchange="javascript: if (Number(this.value) > Number(this.max)) this.value = this.max; if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                min="0" max="32" step="1">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">NCycle</span>
                                             </div>
                                             <input id='ncycle' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
-                                                min="1" step="1">
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min; if(Number(this.value) > Number(this.max)) this.value = this.max;"
+                                                min="1" step="1" max="200">
                                         </div>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">StepS</span>
                                             </div>
                                             <input id='stepS' type="number" class="form-control"
-                                                oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
-                                                min="0">
+                                                onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min; if(Number(this.value) > Number(this.max)) this.value = this.max;"
+                                                min="0" max="100" step="1">
                                         </div>
                                     </div>
                                 </div>
@@ -270,10 +270,10 @@ $(document).ready(() => {
                 repeatNum: $('#repeatNum3').val(),
                 maxiter: $('#maxiter').val(),
                 uploadURL: $('#uploadURL2').val(),
-                projectName: $('#projectName2').val(),
+                imgResolution: $('#imgResolution').val(),
             };
 
-            if (data.maxiter == '' || data.uploadURL == '' || data.projectName == '') {
+            if (data.maxiter == '' || data.uploadURL == '') {
                 alert('Missing at coordinate or rest parameter');
             }
             else {
@@ -309,9 +309,9 @@ $(document).ready(() => {
                 ncycle: $('#ncycle').val(),
                 stepS: $('#stepS').val(),
                 uploadURL: $('#uploadURL2').val(),
-                projectName: $('#projectName2').val(),
+                imgResolution: $('#imgResolution').val(),
             };
-            if (data.coord.x1 == '' || data.coord.x2 == '' || data.coord.y1 == '' || data.coord.y2 == '' || data.maxiter == '' || data.uploadURL == '' || data.projectName == '') {
+            if (data.coord.x1 == '' || data.coord.x2 == '' || data.coord.y1 == '' || data.coord.y2 == '' || data.maxiter == '' || data.uploadURL == '') {
                 alert('Missing at coordinate or rest parameter');
             } else {
                 $('#generate3').prop('disabled', true);
@@ -346,9 +346,9 @@ $(document).ready(() => {
                 ncycle: $('#ncycle').val(),
                 stepS: $('#stepS').val(),
                 uploadURL: $('#uploadURL2').val(),
-                projectName: $('#projectName2').val(),
+                imgResolution: $('#imgResolution').val(),
             };
-            if (data.coord.x1 == '' || data.coord.x2 == '' || data.coord.y1 == '' || data.coord.y2 == '' || data.maxiter == '' || data.uploadURL == '' || data.projectName == '') {
+            if (data.coord.x1 == '' || data.coord.x2 == '' || data.coord.y1 == '' || data.coord.y2 == '' || data.maxiter == '' || data.uploadURL == '') {
                 alert('Missing at coordinate or rest parameter');
             } else {
                 $('#generate3').prop('disabled', true);

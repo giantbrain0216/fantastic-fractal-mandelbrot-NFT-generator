@@ -66,7 +66,7 @@
                                                             <span class="input-group-text">Iterations</span>
                                                         </div>
                                                         <input id='maxiter' type="number" class="form-control"
-                                                            oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                                            onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                                             min="100" value="500" step="50">
                                                     </div>
                                                 </div>
@@ -82,23 +82,25 @@
                         <h3>2. Set the rest of the parameters:</h3>
                         <div id="optionPanel8" class="border border-dark rounded p-3">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-2">
                                     <div class="form-group">
                                         <label for="repeatNum3">Number for result images:</label>
                                         <input type="number" class="form-control" id="repeatNum3" name="repeatNum3"
-                                            oninput="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                            onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
                                             min="1" value="100">
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="projectName2">Input your project name:</label>
-                                        <input type="text" class="form-control" id="projectName2" name="projectName2">
+                                        <label for="imgResolution">Resolution of the image:</label>
+                                        <input type="number" class="form-control" id="imgResolution"
+                                            name="imgResolution" min="640" placeholder="Default: 1280"
+                                            onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;">
                                     </div>
                                 </div>
-                                <div class="col-5">
+                                <div class="col-6">
                                     <div class="form-group">
-                                        <label for="uploadURL2">Enter the URL for uploading:</label>
+                                        <label for="uploadURL2">URL for uploading:</label>
                                         <input type="text" class="form-control" id="uploadURL2" name="uploadURL2"
                                             placeholder="https://www.google.com">
                                     </div>
