@@ -211,9 +211,11 @@ def drawFractal(value, datums):
         step_s = random.randint(
             0, 10) if datums['stepS'] == '' else int(datums['stepS'])
 
+        start = timeit.default_timer()
         mand = Mandelbrot(maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
                           r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
+        stop = timeit.default_timer()
 
         color_thief = ColorThief('./results/' + str(value) + '.png')
         dominant_color = color_thief.get_color(quality=1)
@@ -234,6 +236,12 @@ def drawFractal(value, datums):
 
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
+
+        imgg = Image.open('./results/' + str(value) + '.png')
+
+        complexity = image_complexity(imgg)
+        splendor = image_splendor(imgg)
+        energy = stop-start
 
         token = {
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
@@ -276,6 +284,18 @@ def drawFractal(value, datums):
                 {
                     "trait_type": "y",
                     "value": y,
+                },
+                {
+                    "trait_type": "Copmlexity",
+                    "value": complexity,
+                },
+                {
+                    "trait_type": "Splendor",
+                    "value": splendor,
+                },
+                {
+                    "trait_type": "Energy",
+                    "value": energy,
                 },
             ]
         }
@@ -307,9 +327,11 @@ def drawFractal(value, datums):
         xpixels = 1280 if datums['imgResolution'] == '' else int(
             datums['imgResolution'])
 
+        start = timeit.default_timer()
         mand = Mandelbrot(maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
                           r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
+        stop = timeit.default_timer()
 
         color_thief = ColorThief('./results/' + str(value) + '.png')
         dominant_color = color_thief.get_color(quality=1)
@@ -330,6 +352,12 @@ def drawFractal(value, datums):
 
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
+
+        imgg = Image.open('./results/' + str(value) + '.png')
+
+        complexity = image_complexity(imgg)
+        splendor = image_splendor(imgg)
+        energy = stop-start
 
         token = {
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
@@ -372,6 +400,18 @@ def drawFractal(value, datums):
                 {
                     "trait_type": "y",
                     "value": y,
+                },
+                {
+                    "trait_type": "Copmlexity",
+                    "value": complexity,
+                },
+                {
+                    "trait_type": "Splendor",
+                    "value": splendor,
+                },
+                {
+                    "trait_type": "Energy",
+                    "value": energy,
                 },
             ]
         }
