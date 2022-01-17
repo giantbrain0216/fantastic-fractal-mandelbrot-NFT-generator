@@ -14,6 +14,7 @@ from webcolors import (
 )
 from PIL import Image
 import math
+import timeit
 
 number_of_cpu = joblib.cpu_count()
 
@@ -94,10 +95,13 @@ def drawFractal(value, datums):
         step_s = random.randint(0, 10)
         xpixels = 1280 if datums['imgResolution'] == '' else int(
             datums['imgResolution'])
+        
+        start = timeit.default_timer()
         mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
                           r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
-
+        stop = timeit.default_timer()
+        
         color_thief = ColorThief('./results/' + str(value) + '.png')
         dominant_color = color_thief.get_color(quality=1)
         dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
@@ -122,12 +126,13 @@ def drawFractal(value, datums):
 
         complexity = image_complexity(imgg)
         splendor = image_splendor(imgg)
+        energy = stop-start
 
         token = {
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
             "tokenId": str(value),
             "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
-            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+            "description": dominant_color_name + " " + pointName + " that consumed " + str(energy) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
             "attributes": [
                 {
                     "trait_type": "Stripe",
@@ -172,6 +177,10 @@ def drawFractal(value, datums):
                 {
                     "trait_type": "Splendor",
                     "value": splendor,
+                },
+                {
+                    "trait_type": "Energy",
+                    "value": energy,
                 },
             ]
         }
