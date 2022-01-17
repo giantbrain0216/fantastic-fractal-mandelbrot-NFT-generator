@@ -119,7 +119,9 @@ def drawFractal(value, datums):
         y = (y1 + y2) / 2
 
         imgg = Image.open('./results/' + str(value) + '.png')
-        complexity = image_entropy(imgg)
+
+        complexity = image_complexity(imgg)
+        splendor = image_splendor(imgg)
 
         token = {
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
@@ -164,8 +166,12 @@ def drawFractal(value, datums):
                     "value": y,
                 },
                 {
-                    "trait_type": "copmlexity",
+                    "trait_type": "Copmlexity",
                     "value": complexity,
+                },
+                {
+                    "trait_type": "Splendor",
+                    "value": splendor,
                 },
             ]
         }
@@ -386,14 +392,24 @@ def convert_rgb_to_names(rgb_tuple):
     return names[index]
 
 
-def image_entropy(img):
-    """calculate the entropy of an image"""
+def image_complexity(img):
     histogram = img.histogram()
     histogram_length = sum(histogram)
 
     samples_probability = [float(h) / histogram_length for h in histogram]
 
     return -sum([p * math.log(p, 2) for p in samples_probability if p != 0])
+
+
+def image_splendor(img):
+    uniqueColors = set()
+    w, h = img.size
+    for x in range(w):
+        for y in range(h):
+            pixel = img.getpixel((x, y))
+            uniqueColors.add(pixel)
+    totalUniqueColors = len(uniqueColors)
+    return totalUniqueColors
 
 
 eel.start('index.html', port=0)
