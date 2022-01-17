@@ -95,13 +95,13 @@ def drawFractal(value, datums):
         step_s = random.randint(0, 10)
         xpixels = 1280 if datums['imgResolution'] == '' else int(
             datums['imgResolution'])
-        
+
         start = timeit.default_timer()
         mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
                           r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
-        
+
         color_thief = ColorThief('./results/' + str(value) + '.png')
         dominant_color = color_thief.get_color(quality=1)
         dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
@@ -172,7 +172,7 @@ def drawFractal(value, datums):
                 },
                 {
                     "trait_type": "Copmlexity",
-                    "value": complexity,
+                    "value": round(complexity, 2),
                 },
                 {
                     "trait_type": "Splendor",
@@ -180,7 +180,7 @@ def drawFractal(value, datums):
                 },
                 {
                     "trait_type": "Energy",
-                    "value": energy,
+                    "value": round(energy),
                 },
             ]
         }
@@ -287,7 +287,7 @@ def drawFractal(value, datums):
                 },
                 {
                     "trait_type": "Copmlexity",
-                    "value": complexity,
+                    "value": round(complexity, 2),
                 },
                 {
                     "trait_type": "Splendor",
@@ -295,7 +295,7 @@ def drawFractal(value, datums):
                 },
                 {
                     "trait_type": "Energy",
-                    "value": energy,
+                    "value": round(energy),
                 },
             ]
         }
@@ -403,7 +403,7 @@ def drawFractal(value, datums):
                 },
                 {
                     "trait_type": "Copmlexity",
-                    "value": complexity,
+                    "value": round(complexity, 2),
                 },
                 {
                     "trait_type": "Splendor",
@@ -411,7 +411,7 @@ def drawFractal(value, datums):
                 },
                 {
                     "trait_type": "Energy",
-                    "value": energy,
+                    "value": round(energy),
                 },
             ]
         }
