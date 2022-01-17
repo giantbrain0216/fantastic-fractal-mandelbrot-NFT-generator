@@ -12,10 +12,13 @@ from webcolors import (
     CSS3_HEX_TO_NAMES,
     hex_to_rgb,
 )
+from PIL import Image
+import math
 
 number_of_cpu = joblib.cpu_count()
 
 eel.init('web')
+
 
 @eel.expose
 def generateFractal(data):
@@ -94,7 +97,7 @@ def drawFractal(value, datums):
         mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
                           r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
-        
+
         color_thief = ColorThief('./results/' + str(value) + '.png')
         dominant_color = color_thief.get_color(quality=1)
         dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
@@ -115,11 +118,14 @@ def drawFractal(value, datums):
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
 
+        imgg = Image.open('./results/' + str(value) + '.png')
+        complexity = image_entropy(imgg)
+
         token = {
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
             "tokenId": str(value),
             "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
-            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the "+ locationName +" of the Mandelbrot set",
+            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
             "attributes": [
                 {
                     "trait_type": "Stripe",
@@ -156,6 +162,10 @@ def drawFractal(value, datums):
                 {
                     "trait_type": "y",
                     "value": y,
+                },
+                {
+                    "trait_type": "copmlexity",
+                    "value": complexity,
                 },
             ]
         }
@@ -214,7 +224,7 @@ def drawFractal(value, datums):
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
             "tokenId": str(value),
             "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
-            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the "+ locationName +" of the Mandelbrot set",
+            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
             "attributes": [
                 {
                     "trait_type": "Stripe",
@@ -302,7 +312,7 @@ def drawFractal(value, datums):
         for location in locationNames:
             if location['value'][0] <= zoom and location['value'][1] >= zoom:
                 locationName = location['name']
-        
+
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
 
@@ -310,7 +320,7 @@ def drawFractal(value, datums):
             "image": datums['uploadURL'] + '/' + str(value) + '.png',
             "tokenId": str(value),
             "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
-            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the "+ locationName +" of the Mandelbrot set",
+            "description": dominant_color_name + " " + pointName + " in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
             "attributes": [
                 {
                     "trait_type": "Stripe",
@@ -374,5 +384,16 @@ def convert_rgb_to_names(rgb_tuple):
 
     distance, index = kdt_db.query(rgb_tuple)
     return names[index]
+
+
+def image_entropy(img):
+    """calculate the entropy of an image"""
+    histogram = img.histogram()
+    histogram_length = sum(histogram)
+
+    samples_probability = [float(h) / histogram_length for h in histogram]
+
+    return -sum([p * math.log(p, 2) for p in samples_probability if p != 0])
+
 
 eel.start('index.html', port=0)
