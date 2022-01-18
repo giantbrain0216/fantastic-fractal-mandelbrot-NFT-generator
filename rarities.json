@@ -1,0 +1,422 @@
+[
+    {
+        "name": "#0 Surface Palegreen Hera",
+        "totalRarityScore": 69,
+        "rarities": {
+            "Stripe": {
+                "value": 0,
+                "rarity": 3
+            },
+            "Cycle": {
+                "value": 27,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 8,
+                "rarity": 10
+            },
+            "Color": {
+                "value": "Palegreen",
+                "rarity": 10
+            },
+            "Point": {
+                "value": "Hera",
+                "rarity": 10
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 7.74,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 14162,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 6,
+                "rarity": 5
+            }
+        }
+    },
+    {
+        "name": "#1 Surface Black Ares",
+        "totalRarityScore": 56,
+        "rarities": {
+            "Stripe": {
+                "value": 4,
+                "rarity": 3
+            },
+            "Cycle": {
+                "value": 51,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 3,
+                "rarity": 10
+            },
+            "Color": {
+                "value": "Black",
+                "rarity": 2
+            },
+            "Point": {
+                "value": "Ares",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 6.93,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 1123,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 6,
+                "rarity": 5
+            }
+        }
+    },
+    {
+        "name": "#2 Surface Darkorchid Athena",
+        "totalRarityScore": 71,
+        "rarities": {
+            "Stripe": {
+                "value": 10,
+                "rarity": 10
+            },
+            "Cycle": {
+                "value": 5,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 2,
+                "rarity": 10
+            },
+            "Color": {
+                "value": "Darkorchid",
+                "rarity": 10
+            },
+            "Point": {
+                "value": "Athena",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 8.14,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 29041,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 7,
+                "rarity": 5
+            }
+        }
+    },
+    {
+        "name": "#3 Surface Black Demeter",
+        "totalRarityScore": 61,
+        "rarities": {
+            "Stripe": {
+                "value": 0,
+                "rarity": 3
+            },
+            "Cycle": {
+                "value": 35,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 9,
+                "rarity": 10
+            },
+            "Color": {
+                "value": "Black",
+                "rarity": 2
+            },
+            "Point": {
+                "value": "Demeter",
+                "rarity": 10
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 7.79,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 60625,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 7,
+                "rarity": 5
+            }
+        }
+    },
+    {
+        "name": "#4 Surface Seagreen Hestia",
+        "totalRarityScore": 59,
+        "rarities": {
+            "Stripe": {
+                "value": 4,
+                "rarity": 3
+            },
+            "Cycle": {
+                "value": 11,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 0,
+                "rarity": 5
+            },
+            "Color": {
+                "value": "Seagreen",
+                "rarity": 10
+            },
+            "Point": {
+                "value": "Hestia",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 8.39,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 59700,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 3,
+                "rarity": 5
+            }
+        }
+    },
+    {
+        "name": "#5 Surface Black Athena",
+        "totalRarityScore": 48,
+        "rarities": {
+            "Stripe": {
+                "value": 4,
+                "rarity": 3
+            },
+            "Cycle": {
+                "value": 12,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 0,
+                "rarity": 5
+            },
+            "Color": {
+                "value": "Black",
+                "rarity": 2
+            },
+            "Point": {
+                "value": "Athena",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 6.95,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 12890,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 4,
+                "rarity": 2
+            }
+        }
+    },
+    {
+        "name": "#6 Surface Black Apollo",
+        "totalRarityScore": 55,
+        "rarities": {
+            "Stripe": {
+                "value": 9,
+                "rarity": 10
+            },
+            "Cycle": {
+                "value": 46,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 10,
+                "rarity": 5
+            },
+            "Color": {
+                "value": "Black",
+                "rarity": 2
+            },
+            "Point": {
+                "value": "Apollo",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 6.26,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 42398,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 4,
+                "rarity": 2
+            }
+        }
+    },
+    {
+        "name": "#7 Surface Darkslategray Ares",
+        "totalRarityScore": 61,
+        "rarities": {
+            "Stripe": {
+                "value": 0,
+                "rarity": 3
+            },
+            "Cycle": {
+                "value": 21,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 5,
+                "rarity": 10
+            },
+            "Color": {
+                "value": "Darkslategray",
+                "rarity": 10
+            },
+            "Point": {
+                "value": "Ares",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 8.06,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 60898,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 4,
+                "rarity": 2
+            }
+        }
+    },
+    {
+        "name": "#8 Surface Darkgoldenrod Apollo",
+        "totalRarityScore": 71,
+        "rarities": {
+            "Stripe": {
+                "value": 5,
+                "rarity": 10
+            },
+            "Cycle": {
+                "value": 55,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 1,
+                "rarity": 10
+            },
+            "Color": {
+                "value": "Darkgoldenrod",
+                "rarity": 10
+            },
+            "Point": {
+                "value": "Apollo",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 7.73,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 6437,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 3,
+                "rarity": 5
+            }
+        }
+    },
+    {
+        "name": "#9 Surface Darkgray Hestia",
+        "totalRarityScore": 63,
+        "rarities": {
+            "Stripe": {
+                "value": 8,
+                "rarity": 10
+            },
+            "Cycle": {
+                "value": 3,
+                "rarity": 10
+            },
+            "Step": {
+                "value": 10,
+                "rarity": 5
+            },
+            "Color": {
+                "value": "Darkgray",
+                "rarity": 10
+            },
+            "Point": {
+                "value": "Hestia",
+                "rarity": 5
+            },
+            "Location": {
+                "value": "Surface",
+                "rarity": 1
+            },
+            "Complexiity": {
+                "value": 9.21,
+                "rarity": 10
+            },
+            "Splendor": {
+                "value": 88647,
+                "rarity": 10
+            },
+            "Energy": {
+                "value": 4,
+                "rarity": 2
+            }
+        }
+    }
+]
