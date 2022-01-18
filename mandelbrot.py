@@ -12,11 +12,11 @@ import imageio
 
 def sin_colortable(rgb_thetas=[.85, .0, .15], ncol=2**12):
     def colormap(x, rgb_thetas):
-       
+
         y = np.column_stack(((x + rgb_thetas[0]) * 2 * math.pi,
                              (x + rgb_thetas[1]) * 2 * math.pi,
                              (x + rgb_thetas[2]) * 2 * math.pi))
-        
+
         val = 0.5 + 0.5*np.sin(y)
         return val
     return colormap(np.linspace(0, 1, ncol), rgb_thetas)
@@ -36,7 +36,7 @@ def blinn_phong(normal, light):
              normal.imag*math.sin(light[0])*math.sin(phi_half) +
              1*math.cos(phi_half))
     lspec = lspec/(1+1*math.cos(phi_half))
-    lspec = lspec ** light[6]  
+    lspec = lspec ** light[6]
 
     bright = light[3] + light[4]*ldiff + light[5]*lspec
     bright = bright * light[2] + (1-light[2])/2
@@ -71,7 +71,7 @@ def smooth_iter(c, maxiter, stripe_s, stripe_sig):
                                        (1 + smooth_i * (stripe_sig-1)))
 
             u = z/dz
-            normal = u  
+            normal = u
 
             dem = modz * math.log(modz) / abs(dz) / 2
 
@@ -106,35 +106,35 @@ def color_pixel(matxy, niter, stripe_a, step_s, dem, normal, colortable,
     nshader = 0
     shader = 0
     if stripe_a > 0:
-        
+
         nshader += 1
         shader = shader + stripe_a
-    
+
     if step_s > 0:
-        
+
         step_s = 1/step_s
         col_i = round((niter - niter % step_s) * ncol)
-        
+
         x = niter % step_s / step_s
         light_step = 6*(1-x**5-(1-x)**100)/10
-        
+
         step_s = step_s/8
         x = niter % step_s / step_s
         light_step2 = 6*(1-x**5-(1-x)**30)/10
-        
+
         light_step = overlay(light_step2, light_step, 1)
         nshader += 1
         shader = shader + light_step
-    
+
     if nshader > 0:
         bright = overlay(bright, shader/nshader, 1) * (1-dem) + dem * bright
-    
+
     for i in range(3):
-        
+
         matxy[i] = colortable[col_i, i]
-        
+
         matxy[i] = overlay(matxy[i], bright, 1)
-        
+
         matxy[i] = max(0, min(1, matxy[i]))
 
 
@@ -144,20 +144,18 @@ def compute_set(creal, cim, maxiter, colortable, ncycle, stripe_s, stripe_sig,
     xpixels = len(creal)
     ypixels = len(cim)
 
-    
     mat = np.zeros((ypixels, xpixels, 3))
 
-    
     for x in range(xpixels):
         for y in range(ypixels):
-            
+
             c = complex(creal[x], cim[y])
-            
+
             niter, stripe_a, dem, normal = smooth_iter(c, maxiter, stripe_s,
                                                        stripe_sig)
-            
+
             if niter > 0:
-                
+
                 color_pixel(mat[y, x, ], niter, stripe_a, step_s, dem/diag,
                             normal, colortable,
                             ncycle, light)
@@ -167,22 +165,20 @@ def compute_set(creal, cim, maxiter, colortable, ncycle, stripe_s, stripe_sig,
 @cuda.jit
 def compute_set_gpu(mat, xmin, xmax, ymin, ymax, maxiter, colortable, ncycle,
                     stripe_s, stripe_sig, step_s, diag, light):
-    
+
     index = cuda.grid(1)
     x, y = index % mat.shape[1], index // mat.shape[1]
-    
 
-    
     if (y < mat.shape[0]) and (x < mat.shape[1]):
-        
+
         creal = xmin + x / (mat.shape[1] - 1) * (xmax - xmin)
         cim = ymin + y / (mat.shape[0] - 1) * (ymax - ymin)
-        
+
         c = complex(creal, cim)
-        
+
         niter, stripe_a, dem, normal = smooth_iter(c, maxiter, stripe_s,
                                                    stripe_sig)
-        
+
         if niter > 0:
             color_pixel(mat[y, x, ], niter, stripe_a, step_s, dem/diag, normal,
                         colortable, ncycle, light)
@@ -206,32 +202,31 @@ class Mandelbrot():
         self.stripe_s = stripe_s
         self.stripe_sig = stripe_sig
         self.step_s = step_s
-        
+
         self.light = np.array(light)
         self.light[0] = 2*math.pi*self.light[0]
         self.light[1] = math.pi/2*self.light[1]
-        
+
         self.ypixels = round(self.xpixels / (self.coord[1]-self.coord[0]) *
                              (self.coord[3]-self.coord[2]))
-        
+
         self.colortable = sin_colortable(self.rgb_thetas)
-        
+
         self.update_set()
 
     def update_set(self):
-        
+
         ncycle = math.sqrt(self.ncycle)
         diag = math.sqrt((self.coord[1]-self.coord[0])**2 +
                          (self.coord[3]-self.coord[2])**2)
-        
+
         xp = self.xpixels*self.os
         yp = self.ypixels*self.os
 
         if(self.gpu):
-            
+
             self.set = np.zeros((yp, xp, 3))
-            
-            
+
             npixels = xp * yp
             nthread = 32
             nblock = math.ceil(npixels / nthread)
@@ -241,16 +236,16 @@ class Mandelbrot():
                                      self.stripe_sig, self.step_s, diag,
                                      self.light)
         else:
-            
+
             creal = np.linspace(self.coord[0], self.coord[1], xp)
             cim = np.linspace(self.coord[2], self.coord[3], yp)
-            
+
             self.set = compute_set(creal, cim, self.maxiter,
                                    self.colortable, ncycle, self.stripe_s,
                                    self.stripe_sig, self.step_s, diag,
                                    self.light)
         self.set = (255*self.set).astype(np.uint8)
-        
+
         if self.os > 1:
             self.set = (self.set
                         .reshape((self.ypixels, self.os,
@@ -258,20 +253,20 @@ class Mandelbrot():
                         .mean(3).mean(1).astype(np.uint8))
 
     def draw(self, filename=None):
-        
+
         img = Image.fromarray(self.set[::-1, :, :], 'RGB')
         if filename is not None:
-            img.save(filename)  
+            img.save(filename)
         else:
-            img.show()  
+            img.show()
 
     def draw_mpl(self, filename=None, dpi=72):
         plt.subplots(figsize=(self.xpixels/dpi, self.ypixels/dpi))
         plt.imshow(self.set, extent=self.coord, origin='lower')
-        
+
         plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
         plt.axis('off')
-        
+
         if filename is not None:
             plt.savefig(filename, dpi=dpi)
         else:
@@ -296,43 +291,39 @@ class Mandelbrot():
                       y + yrange * s]
 
     def animate(self, x, y, file_out, n_frames=150, loop=True):
-        
-        
+
         def gaussian(n, sig=1):
             x = np.linspace(-1, 1, n)
             return np.exp(-np.power(x, 2.) / (2 * np.power(sig, 2.)))
         s = 1 - gaussian(n_frames, 1/2)*.3
 
-        
         self.update_set()
         images = [self.set]
-        
+
         for i in range(1, n_frames):
-            
+
             self.szoom_at(x, y, s[i])
-            
+
             self.update_set()
             images.append(self.set)
 
-        
         if(loop):
             images += images[::-2]
-        
+
         imageio.mimsave(file_out, images)
 
     def explore(self, dpi=72):
-        
-        
+
         self.explorer = Mandelbrot_explorer(self, dpi)
 
 
 class Mandelbrot_explorer():
 
-    def __init__(self, mand, dpi=72):
+    def __init__(self, mand, dpi=172):
         self.mand = mand
-        
+
         self.mand.update_set()
-        
+
         self.fig, self.ax = plt.subplots(figsize=(mand.xpixels/dpi,
                                                   mand.ypixels/dpi))
         self.graph = plt.imshow(mand.set,
@@ -340,7 +331,6 @@ class Mandelbrot_explorer():
         plt.subplots_adjust(left=0, right=1, bottom=0, top=1)
         plt.axis('off')
 
-        
         self.sld_maxit = Slider(plt.axes([0.1, 0.005, 0.2, 0.02]), 'Iterations',
                                 0, 5000, mand.maxiter, valstep=5)
         self.sld_maxit.on_changed(self.update_val)
@@ -387,23 +377,19 @@ class Mandelbrot_explorer():
                               1, 100, mand.light[6], valstep=1)
         self.sld_li7.on_changed(self.update_val)
 
-        
         self.coord = Button(
             plt.axes([0.9, 0.9, 0.1, 0.1]), 'Save Coordinate')
         self.coord.on_clicked(self.save_coord)
 
-        
         plt.sca(self.ax)
-        
-        
-        
+
         self.cid1 = self.fig.canvas.mpl_connect('scroll_event', self.onclick)
         self.cid2 = self.fig.canvas.mpl_connect('button_press_event',
                                                 self.onclick)
         plt.show()
 
     def save_coord(self, val):
-        
+
         self.mand.range = self.mand.coord
         plt.close()
 
@@ -426,18 +412,17 @@ class Mandelbrot_explorer():
         plt.show()
 
     def onclick(self, event):
-        
+
         if event.inaxes == self.ax:
-            
-            
+
             zoom = 1/4
             if event.button in ('down', 3):
-                
+
                 zoom = 1/zoom
-            
+
             self.mand.zoom_at(event.xdata, event.ydata, zoom)
             self.mand.update_set()
-            
+
             self.graph.set_data(self.mand.set)
             self.graph.set_extent(self.mand.coord)
             plt.draw()

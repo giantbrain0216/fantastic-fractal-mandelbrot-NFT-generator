@@ -1,8 +1,7 @@
 $(document).ready(() => {
-
-    $('input[name="modeSwitch"]').change((e) => {
-        let val = e.target.defaultValue;
-        let autoOptions = `<div class="col-4"></div><div class="col-4">
+  $('input[name="modeSwitch"]').change((e) => {
+    let val = e.target.defaultValue;
+    let autoOptions = `<div class="col-4"></div><div class="col-4">
                                 <div class="card">
                                     <div class="card-header ">
                                     Set the number of iterations of the fractal algorithm<br>(If the number of iterations is too large, your device may be stopped.)
@@ -19,7 +18,7 @@ $(document).ready(() => {
                                     </div>
                                 </div>
                             </div><div class="col-4"></div>`;
-        let semiOptions = `<div class="col-4">
+    let semiOptions = `<div class="col-4">
                                 <div class="card">
                                     <div class="card-header ">
                                         Set phase for each color channel<br>(Input 0~1 float: eg. 0.01 or
@@ -136,7 +135,7 @@ $(document).ready(() => {
                                     </div>
                                 </div>
                             </div>`;
-        let rangeOptions = `<div class="col-4">
+    let rangeOptions = `<div class="col-4">
                                 <div class="card">
                                     <div class="card-header ">
                                         Set phase for each color channel<br>(Input 0~1 float: eg. 0.01 or
@@ -251,142 +250,177 @@ $(document).ready(() => {
                                     </div>
                                 </div>
                             </div>`;
-        if (val == 'semi') {
-            $('#optionPanel7').html(semiOptions);
-        }
-        else if (val == 'auto') {
-            $('#optionPanel7').html(autoOptions);
-        }
-        else if (val == 'range') {
-            $('#optionPanel7').html(rangeOptions);
-        }
-    });
+    let auto2Options = `<div class="col-4"></div><div class="col-4">
+                            <div class="card">
+                                <div class="card-header ">
+                                Set the number of iterations of the fractal algorithm<br>(If the number of iterations is too large, your device may be stopped.)
+                                </div>
+                                <div class="card-body">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Iterations</span>
+                                        </div>
+                                        <input id='maxiter' type="number" class="form-control"
+                                            onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                            min="100" value="500" step="50">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4"></div>`;
 
-    $('#generate3').on('click', () => {
-        mode = $('input[name="modeSwitch"]').filter(':checked').val();
-        if (mode == 'auto') {
-            let data = {
-                mode: 'auto',
-                repeatNum: $('#repeatNum3').val(),
-                maxiter: $('#maxiter').val(),
-                uploadURL: $('#uploadURL2').val(),
-                imgResolution: $('#imgResolution').val(),
-            };
+    if (val == "semi") {
+      $("#optionPanel7").html(semiOptions);
+    } else if (val == "auto") {
+      $("#optionPanel7").html(autoOptions);
+    } else if (val == "auto2") {
+      $("#optionPanel7").html(auto2Options);
+    } else if (val == "range") {
+      $("#optionPanel7").html(rangeOptions);
+    }
+  });
 
-            if (data.maxiter == '' || data.uploadURL == '') {
-                alert('Missing at coordinate or rest parameter');
-            }
-            else {
-                $('#generate3').prop('disabled', true);
-                $('#optionPanel9 .progress-bar').addClass('progress-bar-animated');
-                $('#reset3').prop('disabled', true);
-                eel.generateFractal(JSON.stringify(data))(r => {
-                    if(r == 'success') {
-                        $('#optionPanel9 .progress-bar').removeClass('progress-bar-animated');
-                        $('#reset3').prop('disabled', false);
-                        $('#generate3').prop('disabled', false);
-                    }
-                });
-            }
-        }
-        else if (mode == 'semi') {
-            let data = {
-                mode: 'semi',
-                repeatNum: $('#repeatNum3').val(),
-                color: {
-                    r: $('#color-R').val(),
-                    g: $('#color-G').val(),
-                    b: $('#color-B').val(),
-                },
-                coord: {
-                    x1: $('#x1').val(),
-                    x2: $('#x2').val(),
-                    y1: $('#y1').val(),
-                    y2: $('#y2').val(),
-                },
-                maxiter: $('#maxiter').val(),
-                stripeS: $('#stripeS').val(),
-                ncycle: $('#ncycle').val(),
-                stepS: $('#stepS').val(),
-                uploadURL: $('#uploadURL2').val(),
-                imgResolution: $('#imgResolution').val(),
-            };
-            if (data.coord.x1 == '' || data.coord.x2 == '' || data.coord.y1 == '' || data.coord.y2 == '' || data.maxiter == '' || data.uploadURL == '') {
-                alert('Missing at coordinate or rest parameter');
-            } else {
-                $('#generate3').prop('disabled', true);
-                $('#optionPanel9 .progress-bar').addClass('progress-bar-animated');
-                $('#reset3').prop('disabled', true);
-                eel.generateFractal(JSON.stringify(data))(r => {
-                    if(r == 'success') {
-                        $('#optionPanel9 .progress-bar').removeClass('progress-bar-animated');
-                        $('#reset3').prop('disabled', false);
-                        $('#generate3').prop('disabled', false);
-                    }
-                });
-            }
-        }
-        else if (mode == 'range') {
-            let data = {
-                mode: 'range',
-                repeatNum: $('#repeatNum3').val(),
-                color: {
-                    r: $('#color-R').val(),
-                    g: $('#color-G').val(),
-                    b: $('#color-B').val(),
-                },
-                coord: {
-                    x1: $('#x1').val(),
-                    x2: $('#x2').val(),
-                    y1: $('#y1').val(),
-                    y2: $('#y2').val(),
-                },
-                maxiter: $('#maxiter').val(),
-                stripeS: $('#stripeS').val(),
-                ncycle: $('#ncycle').val(),
-                stepS: $('#stepS').val(),
-                uploadURL: $('#uploadURL2').val(),
-                imgResolution: $('#imgResolution').val(),
-            };
-            if (data.coord.x1 == '' || data.coord.x2 == '' || data.coord.y1 == '' || data.coord.y2 == '' || data.maxiter == '' || data.uploadURL == '') {
-                alert('Missing at coordinate or rest parameter');
-            } else {
-                $('#generate3').prop('disabled', true);
-                $('#optionPanel9 .progress-bar').addClass('progress-bar-animated');
-                $('#reset3').prop('disabled', true);
-                eel.generateFractal(JSON.stringify(data))(r => {
-                    if(r == 'success') {
-                        $('#optionPanel9 .progress-bar').removeClass('progress-bar-animated');
-                        $('#reset3').prop('disabled', false);
-                        $('#generate3').prop('disabled', false);
-                    }
-                });
-            }
-        }
-    });
+  $("#generate3").on("click", () => {
+    mode = $('input[name="modeSwitch"]').filter(":checked").val();
+    if (mode == "auto") {
+      let data = {
+        mode: "auto",
+        repeatNum: $("#repeatNum3").val(),
+        maxiter: $("#maxiter").val(),
+        uploadURL: $("#uploadURL2").val(),
+        imgResolution: $("#imgResolution").val(),
+      };
 
-    $('#reset3').on('click', () => {
-        document.location.reload();
-    });
+      if (data.maxiter == "" || data.uploadURL == "") {
+        alert("Missing at coordinate or rest parameter");
+      } else {
+        $("#generate3").prop("disabled", true);
+        $("#optionPanel9 .progress-bar").addClass("progress-bar-animated");
+        $("#reset3").prop("disabled", true);
+        eel.generateFractal(JSON.stringify(data))((r) => {
+          if (r == "success") {
+            $("#optionPanel9 .progress-bar").removeClass(
+              "progress-bar-animated"
+            );
+            $("#reset3").prop("disabled", false);
+            $("#generate3").prop("disabled", false);
+          }
+        });
+      }
+    } else if (mode == "semi") {
+      let data = {
+        mode: "semi",
+        repeatNum: $("#repeatNum3").val(),
+        color: {
+          r: $("#color-R").val(),
+          g: $("#color-G").val(),
+          b: $("#color-B").val(),
+        },
+        coord: {
+          x1: $("#x1").val(),
+          x2: $("#x2").val(),
+          y1: $("#y1").val(),
+          y2: $("#y2").val(),
+        },
+        maxiter: $("#maxiter").val(),
+        stripeS: $("#stripeS").val(),
+        ncycle: $("#ncycle").val(),
+        stepS: $("#stepS").val(),
+        uploadURL: $("#uploadURL2").val(),
+        imgResolution: $("#imgResolution").val(),
+      };
+      if (
+        data.coord.x1 == "" ||
+        data.coord.x2 == "" ||
+        data.coord.y1 == "" ||
+        data.coord.y2 == "" ||
+        data.maxiter == "" ||
+        data.uploadURL == ""
+      ) {
+        alert("Missing at coordinate or rest parameter");
+      } else {
+        $("#generate3").prop("disabled", true);
+        $("#optionPanel9 .progress-bar").addClass("progress-bar-animated");
+        $("#reset3").prop("disabled", true);
+        eel.generateFractal(JSON.stringify(data))((r) => {
+          if (r == "success") {
+            $("#optionPanel9 .progress-bar").removeClass(
+              "progress-bar-animated"
+            );
+            $("#reset3").prop("disabled", false);
+            $("#generate3").prop("disabled", false);
+          }
+        });
+      }
+    } else if (mode == "range") {
+      let data = {
+        mode: "range",
+        repeatNum: $("#repeatNum3").val(),
+        color: {
+          r: $("#color-R").val(),
+          g: $("#color-G").val(),
+          b: $("#color-B").val(),
+        },
+        coord: {
+          x1: $("#x1").val(),
+          x2: $("#x2").val(),
+          y1: $("#y1").val(),
+          y2: $("#y2").val(),
+        },
+        maxiter: $("#maxiter").val(),
+        stripeS: $("#stripeS").val(),
+        ncycle: $("#ncycle").val(),
+        stepS: $("#stepS").val(),
+        uploadURL: $("#uploadURL2").val(),
+        imgResolution: $("#imgResolution").val(),
+      };
+      if (
+        data.coord.x1 == "" ||
+        data.coord.x2 == "" ||
+        data.coord.y1 == "" ||
+        data.coord.y2 == "" ||
+        data.maxiter == "" ||
+        data.uploadURL == ""
+      ) {
+        alert("Missing at coordinate or rest parameter");
+      } else {
+        $("#generate3").prop("disabled", true);
+        $("#optionPanel9 .progress-bar").addClass("progress-bar-animated");
+        $("#reset3").prop("disabled", true);
+        eel.generateFractal(JSON.stringify(data))((r) => {
+          if (r == "success") {
+            $("#optionPanel9 .progress-bar").removeClass(
+              "progress-bar-animated"
+            );
+            $("#reset3").prop("disabled", false);
+            $("#generate3").prop("disabled", false);
+          }
+        });
+      }
+    }
+  });
+
+  $("#reset3").on("click", () => {
+    document.location.reload();
+  });
 });
 
 selectRange = () => {
-    eel.getRange()(r => {
-        $('#x1').val(JSON.parse(r)[0]);
-        $('#x2').val(JSON.parse(r)[1]);
-        $('#y1').val(JSON.parse(r)[2]);
-        $('#y2').val(JSON.parse(r)[3]);
-    });
-}
+  eel.getRange()((r) => {
+    $("#x1").val(JSON.parse(r)[0]);
+    $("#x2").val(JSON.parse(r)[1]);
+    $("#y1").val(JSON.parse(r)[2]);
+    $("#y2").val(JSON.parse(r)[3]);
+  });
+};
 
 calY2 = () => {
-    x1 = $('#x1').val();
-    x2 = $('#x2').val();
-    y1 = $('#y1').val();
-    y2 = '';
-    if (x1 != '' && x2 != '' && y1 != '') {
-        y2 = ((1 / 1) * (Number(x2) - Number(x1)) + Number(y1)).toString();
-    }
-    $('#y2').val(y2);
-}
-
+  x1 = $("#x1").val();
+  x2 = $("#x2").val();
+  y1 = $("#y1").val();
+  y2 = "";
+  if (x1 != "" && x2 != "" && y1 != "") {
+    y2 = ((1 / 1) * (Number(x2) - Number(x1)) + Number(y1)).toString();
+  }
+  $("#y2").val(y2);
+};
