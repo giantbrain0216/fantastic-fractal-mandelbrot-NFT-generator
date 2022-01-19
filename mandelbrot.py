@@ -319,7 +319,7 @@ class Mandelbrot():
 
 class Mandelbrot_explorer():
 
-    def __init__(self, mand, dpi=172):
+    def __init__(self, mand, dpi=72):
         self.mand = mand
 
         self.mand.update_set()

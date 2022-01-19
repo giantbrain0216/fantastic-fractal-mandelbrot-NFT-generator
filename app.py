@@ -39,8 +39,12 @@ def generateFractal(data):
         os.makedirs('metadata')
 
     datums = json.loads(data)
+    with open('coords.json', 'r') as f:
+        text = f.read()
+        datums['coords'] = json.loads(text)
+
     Parallel(n_jobs=number_of_cpu)(delayed(drawFractal)(i, datums)
-                                   for i in range(int(datums['repeatNum'])))
+                                            for i in range(int(datums['repeatNum'])))
 
     for filename in os.listdir("metadata"):
         with open(os.path.join("metadata", filename), 'r') as f:
@@ -51,10 +55,6 @@ def generateFractal(data):
         json.dump(all_traits, outfile, indent=4)
     # for i in range(int(datums['repeatNum'])):
     #     drawFractal(i, datums)
-
-    rarities = genRarity(all_traits)
-    with open('rarities.json', 'w') as rarity:
-        json.dump(rarities, rarity, indent=4)
 
     return 'success'
 
@@ -91,6 +91,10 @@ def drawFractal(value, datums):
         x2 = random.uniform(xmin, xmax)
         y1 = random.uniform(ymin, ymax)
         y2 = (1 / 1) * (x2 - x1) + y1
+
+        if((x2-x1) == 0 or (y2-y1) == 0):
+            return 'Zero Division Error'
+
         r = round(random.uniform(0, 1), 2)
         g = round(random.uniform(0, 1), 2)
         b = round(random.uniform(0, 1), 2)
@@ -201,6 +205,10 @@ def drawFractal(value, datums):
         x2 = random.uniform(x1, x2)
         y1 = random.uniform(y1, y2)
         y2 = (1 / 1) * (x2 - x1) + y1
+
+        if((x2-x1) == 0 or (y2-y1) == 0):
+            return 'Zero Division Error'
+
         xpixels = 1280 if datums['imgResolution'] == '' else int(
             datums['imgResolution'])
         r = round(random.uniform(0, 1), 2) if datums['color']['r'] == '' else float(
@@ -317,6 +325,9 @@ def drawFractal(value, datums):
         y1 = random.uniform(y1, y2)
         y2 = (1 / 1) * (x2 - x1) + y1
 
+        if((x2-x1) == 0 or (y2-y1) == 0):
+            return 'Zero Division Error'
+
         r = round(random.uniform(0, 1), 2) if datums['color']['r'] == '' else float(
             datums['color']['r'])
         g = round(random.uniform(0, 1), 2) if datums['color']['g'] == '' else float(
@@ -423,6 +434,117 @@ def drawFractal(value, datums):
         with open('./metadata/' + str(value), 'w') as outfile:
             json.dump(token, outfile, indent=4)
 
+    if(datums['mode'] == 'auto2'):
+        index = random.randint(0, len(datums['coords']) - 1)
+        x1 = float(datums['coords'][index]['xmin'])
+        x2 = float(datums['coords'][index]['xmax'])
+        y1 = float(datums['coords'][index]['ymin'])
+        y2 = (1 / 1) * (x2 - x1) + y1
+
+        if((x2-x1) == 0 or (y2-y1) == 0):
+            return 'Zero Division Error'
+
+        r = round(random.uniform(0, 1), 2)
+        g = round(random.uniform(0, 1), 2)
+        b = round(random.uniform(0, 1), 2)
+        maxiter = int(datums['maxiter'])
+        stripe_s = random.randint(0, 10)
+        ncycle = random.randint(1, 64)
+        step_s = random.randint(0, 10)
+        xpixels = 1280 if datums['imgResolution'] == '' else int(
+            datums['imgResolution'])
+
+        start = timeit.default_timer()
+        # mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
+        #     r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
+        # mand.draw('./results/' + str(value) + '.png')
+        stop = timeit.default_timer()
+
+        color_thief = ColorThief('./results/' + str(value) + '.png')
+        dominant_color = color_thief.get_color(quality=1)
+        dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
+
+        centerPointX = (x2 + x1) / 2
+        pointName = ''
+        for point in pointNames:
+            if point['value'][0] <= centerPointX and point['value'][1] >= centerPointX:
+                pointName = point['name']
+
+        locationName = ''
+        zoom = int(round((xmax - xmin) * (ymax - ymin)) /
+                   ((x2 - x1) * (y2 - y1)))
+        for location in locationNames:
+            if location['value'][0] <= zoom and location['value'][1] >= zoom:
+                locationName = location['name']
+
+        x = (x1 + x2) / 2
+        y = (y1 + y2) / 2
+
+        imgg = Image.open('./results/' + str(value) + '.png')
+
+        complexity = image_complexity(imgg)
+        splendor = image_splendor(imgg)
+        energy = stop-start
+
+        token = {
+            "image": datums['uploadURL'] + '/' + str(value) + '.png',
+            "tokenId": str(value),
+            "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
+            "description": dominant_color_name + " " + pointName + " that consumed " + str(energy) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+            "attributes": [
+                {
+                    "trait_type": "Stripe",
+                    "value": stripe_s,
+                },
+                {
+                    "trait_type": "Cycle",
+                    "value": ncycle,
+                },
+                {
+                    "trait_type": "Step",
+                    "value": step_s,
+                },
+                {
+                    "trait_type": "Zoom",
+                    "value": zoom,
+                },
+                {
+                    "trait_type": "Color",
+                    "value": dominant_color_name,
+                },
+                {
+                    "trait_type": "Point",
+                    "value": pointName,
+                },
+                {
+                    "trait_type": "Location",
+                    "value": locationName,
+                },
+                {
+                    "trait_type": "x",
+                    "value": x,
+                },
+                {
+                    "trait_type": "y",
+                    "value": y,
+                },
+                {
+                    "trait_type": "Complexity",
+                    "value": round(complexity, 1),
+                },
+                {
+                    "trait_type": "Splendor",
+                    "value": splendor,
+                },
+                {
+                    "trait_type": "Energy",
+                    "value": round(energy, 1),
+                },
+            ]
+        }
+        with open('./metadata/' + str(value), 'w') as outfile:
+            json.dump(token, outfile, indent=4)
+
 
 @eel.expose
 def getRange():
@@ -464,71 +586,6 @@ def image_splendor(img):
             uniqueColors.add(pixel)
     totalUniqueColors = len(uniqueColors)
     return totalUniqueColors
-
-
-def getRare(key, value, all_traits):
-    whole = len(all_traits)
-    count = 0
-    for trait in all_traits:
-        for attr in trait['attributes']:
-            if(attr['trait_type'] == key and attr['value'] == value):
-                count = count + 1
-    return round(whole/count)
-
-
-def getValue(key, attrs):
-    for attr in attrs:
-        if(attr['trait_type'] == key):
-            return attr['value']
-
-
-def genRarity(traits):
-    rarities = []
-    for tr in traits:
-        trait = {
-            "name": tr['name'],
-            "totalRarityScore": getRare('Stripe', getValue('Stripe', tr['attributes']), traits) + getRare('Cycle', getValue('Cycle', tr['attributes']), traits) + getRare('Step', getValue('Step', tr['attributes']), traits) + getRare('Color', getValue('Color', tr['attributes']), traits) + getRare('Point', getValue('Point', tr['attributes']), traits) + getRare('Location', getValue('Location', tr['attributes']), traits) + getRare('Complexity', getValue('Complexity', tr['attributes']), traits) + getRare('Splendor', getValue('Splendor', tr['attributes']), traits) + getRare('Energy', getValue('Energy', tr['attributes']), traits),
-            "rarities": {
-                "Stripe": {
-                    "value": getValue('Stripe', tr['attributes']),
-                    "rarity": getRare('Stripe', getValue('Stripe', tr['attributes']), traits)
-                },
-                "Cycle": {
-                    "value": getValue('Cycle', tr['attributes']),
-                    "rarity": getRare('Cycle', getValue('Cycle', tr['attributes']), traits)
-                },
-                "Step": {
-                    "value": getValue('Step', tr['attributes']),
-                    "rarity": getRare('Step', getValue('Step', tr['attributes']), traits)
-                },
-                "Color": {
-                    "value": getValue('Color', tr['attributes']),
-                    "rarity": getRare('Color', getValue('Color', tr['attributes']), traits)
-                },
-                "Point": {
-                    "value": getValue('Point', tr['attributes']),
-                    "rarity": getRare('Point', getValue('Point', tr['attributes']), traits)
-                },
-                "Location": {
-                    "value": getValue('Location', tr['attributes']),
-                    "rarity": getRare('Location', getValue('Location', tr['attributes']), traits)
-                },
-                "Complexiity": {
-                    "value": getValue('Complexity', tr['attributes']),
-                    "rarity": getRare('Complexity', getValue('Complexity', tr['attributes']), traits)
-                },
-                "Splendor": {
-                    "value": getValue('Splendor', tr['attributes']),
-                    "rarity": getRare('Splendor', getValue('Splendor', tr['attributes']), traits)
-                },
-                "Energy": {
-                    "value": getValue('Energy', tr['attributes']),
-                    "rarity": getRare('Energy', getValue('Energy', tr['attributes']), traits)
-                }
-            }
-        }
-        rarities.append(trait)
-    return rarities
 
 
 eel.start('index.html', port=0)
