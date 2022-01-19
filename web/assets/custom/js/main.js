@@ -397,6 +397,31 @@ $(document).ready(() => {
           }
         });
       }
+    }else if (mode == "auto2") {
+      let data = {
+        mode: "auto2",
+        repeatNum: $("#repeatNum3").val(),
+        maxiter: $("#maxiter").val(),
+        uploadURL: $("#uploadURL2").val(),
+        imgResolution: $("#imgResolution").val(),
+      };
+
+      if (data.maxiter == "" || data.uploadURL == "") {
+        alert("Missing at coordinate or rest parameter");
+      } else {
+        $("#generate3").prop("disabled", true);
+        $("#optionPanel9 .progress-bar").addClass("progress-bar-animated");
+        $("#reset3").prop("disabled", true);
+        eel.generateFractal(JSON.stringify(data))((r) => {
+          if (r == "success") {
+            $("#optionPanel9 .progress-bar").removeClass(
+              "progress-bar-animated"
+            );
+            $("#reset3").prop("disabled", false);
+            $("#generate3").prop("disabled", false);
+          }
+        });
+      }
     }
   });
 
