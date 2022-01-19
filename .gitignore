@@ -116,6 +116,3 @@ dmypy.json
 /results
 /metadata
 rarities.json
-coords.json
-scrap.py
-testcoord.py
