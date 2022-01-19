@@ -10,16 +10,16 @@ from PIL import Image
 import imageio
 
 
-def sin_colortable(rgb_thetas=[.85, .0, .15], ncol=2**12):
-    def colormap(x, rgb_thetas):
+# def sin_colortable(rgb_thetas=[.85, .0, .15], ncol=2**12):
+#     def colormap(x, rgb_thetas):
 
-        y = np.column_stack(((x + rgb_thetas[0]) * 2 * math.pi,
-                             (x + rgb_thetas[1]) * 2 * math.pi,
-                             (x + rgb_thetas[2]) * 2 * math.pi))
+#         y = np.column_stack(((x + rgb_thetas[0]) * 2 * math.pi,
+#                              (x + rgb_thetas[1]) * 2 * math.pi,
+#                              (x + rgb_thetas[2]) * 2 * math.pi))
 
-        val = 0.5 + 0.5*np.sin(y)
-        return val
-    return colormap(np.linspace(0, 1, ncol), rgb_thetas)
+#         val = 0.5 + 0.5*np.sin(y)
+#         return val
+#     return colormap(np.linspace(0, 1, ncol), rgb_thetas)
 
 
 @jit(nopython=True)
