@@ -17,6 +17,19 @@ def getRare(key, value, all_traits):
     return round(whole/count)
 
 
+def sortRarity(rarities):
+    n = len(rarities)
+    for i in range(n):
+        already_sorted = True
+        for j in range(n-i-1):
+            if rarities[j]['totalRarityScore'] < rarities[j + 1]['totalRarityScore']:
+                rarities[j], rarities[j+1] = rarities[j+1], rarities[j]
+                already_sorted = False
+        if already_sorted:
+            break
+    return rarities
+
+
 def genRarity(traits):
     rarities = []
     for tr in traits:
@@ -63,7 +76,7 @@ def genRarity(traits):
             }
         }
         rarities.append(trait)
-    return rarities
+    return sortRarity(rarities)
 
 
 all_traits = []
