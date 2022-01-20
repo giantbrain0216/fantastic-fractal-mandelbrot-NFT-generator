@@ -2355,7 +2355,8 @@ def drawFractal(value, datums):
             }
             with open('./metadata/' + str(value), 'w') as outfile:
                 json.dump(token, outfile, indent=4)
-
+        else:
+            os.remove('./results/' + str(value) + '.png')
     if(datums['mode'] == 'semi'):
         x1 = float(datums['coord']['x1'])
         x2 = float(datums['coord']['x2'])
@@ -2475,7 +2476,8 @@ def drawFractal(value, datums):
             }
             with open('./metadata/' + str(value), 'w') as outfile:
                 json.dump(token, outfile, indent=4)
-
+        else:
+            os.remove('./results/' + str(value) + '.png')
     if(datums['mode'] == 'range'):
         x1 = float(datums['coord']['x1'])
         x2 = float(datums['coord']['x2'])
@@ -2594,7 +2596,8 @@ def drawFractal(value, datums):
             }
             with open('./metadata/' + str(value), 'w') as outfile:
                 json.dump(token, outfile, indent=4)
-
+        else:
+            os.remove('./results/' + str(value) + '.png')
     if(datums['mode'] == 'auto2'):
         index = random.randint(0, len(datums['coords']) - 1)
         x1 = float(datums['coords'][index]['xmin'])
@@ -2705,7 +2708,8 @@ def drawFractal(value, datums):
             }
             with open('./metadata/' + str(value), 'w') as outfile:
                 json.dump(token, outfile, indent=4)
-
+        else:
+            os.remove('./results/' + str(value) + '.png')
 
 @eel.expose
 def getRange():
