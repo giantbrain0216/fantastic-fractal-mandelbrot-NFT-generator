@@ -2219,10 +2219,10 @@ def generateFractal(data):
 
 
 def drawFractal(value, datums):
-    xmin = -2
-    xmax = 1
-    ymin = -1
-    ymax = 1
+    xmin = -2.6
+    xmax = 1.845
+    ymin = -1.25
+    ymax = 1.25
 
     pointNames = [
         {'name': "Poseidon", 'value': (0.25, 9)},
@@ -2735,100 +2735,97 @@ def drawFractal(value, datums):
         frames = int(datums['frames'])
 
         start = timeit.default_timer()
-        # mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
-        #     r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
-        # mand.draw('./results/' + str(value) + '.png')
         mand = Mandelbrot(maxiter=maxiter, rgb_thetas=[
                           r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.animate(x, y, './results/' + str(value) + '.gif', frames)
         stop = timeit.default_timer()
 
-        # color_thief = ColorThief('./results/' + str(value) + '.png')
-        # dominant_color = color_thief.get_color(quality=1)
-        # dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
-        # if dominant_color_name != 'Black':
-        #     centerPointX = (x2 + x1) / 2
-        #     pointName = ''
-        #     for point in pointNames:
-        #         if point['value'][0] <= centerPointX and point['value'][1] >= centerPointX:
-        #             pointName = point['name']
+        color_thief = ColorThief('./results/' + str(value) + '.gif')
+        dominant_color = color_thief.get_color(quality=1)
+        dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
+        if dominant_color_name != 'Black':
+            centerPointX = (x2 + x1) / 2
+            pointName = ''
+            for point in pointNames:
+                if point['value'][0] <= centerPointX and point['value'][1] >= centerPointX:
+                    pointName = point['name']
 
-        #     locationName = ''
-        #     zoom = int(round((xmax - xmin) * (ymax - ymin)) /
-        #                ((x2 - x1) * (y2 - y1)))
-        #     for location in locationNames:
-        #         if location['value'][0] <= zoom and location['value'][1] >= zoom:
-        #             locationName = location['name']
+            locationName = ''
+            zoom = int(round((xmax - xmin) * (ymax - ymin)) /
+                       ((x2 - x1) * (y2 - y1)))
+            for location in locationNames:
+                if location['value'][0] <= zoom and location['value'][1] >= zoom:
+                    locationName = location['name']
 
-        #     x = (x1 + x2) / 2
-        #     y = (y1 + y2) / 2
+            x = (x1 + x2) / 2
+            y = (y1 + y2) / 2
 
-        #     imgg = Image.open('./results/' + str(value) + '.png')
+            imgg = Image.open('./results/' + str(value) + '.gif')
 
-        #     complexity = image_complexity(imgg)
-        #     splendor = image_splendor(imgg)
-        #     energy = stop-start
+            complexity = image_complexity(imgg)
+            splendor = image_splendor(imgg)
+            energy = stop-start
 
-        #     token = {
-        #         "image": datums['uploadURL'] + '/' + str(value) + '.png',
-        #         "tokenId": str(value),
-        #         "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
-        #         "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
-        #         "attributes": [
-        #             {
-        #                 "trait_type": "Stripe",
-        #                 "value": stripe_s,
-        #             },
-        #             {
-        #                 "trait_type": "Cycle",
-        #                 "value": ncycle,
-        #             },
-        #             {
-        #                 "trait_type": "Step",
-        #                 "value": step_s,
-        #             },
-        #             {
-        #                 "trait_type": "Zoom",
-        #                 "value": zoom,
-        #             },
-        #             {
-        #                 "trait_type": "Color",
-        #                 "value": dominant_color_name,
-        #             },
-        #             {
-        #                 "trait_type": "Point",
-        #                 "value": pointName,
-        #             },
-        #             {
-        #                 "trait_type": "Location",
-        #                 "value": locationName,
-        #             },
-        #             {
-        #                 "trait_type": "x",
-        #                 "value": x,
-        #             },
-        #             {
-        #                 "trait_type": "y",
-        #                 "value": y,
-        #             },
-        #             {
-        #                 "trait_type": "Complexity",
-        #                 "value": round(complexity, 1),
-        #             },
-        #             {
-        #                 "trait_type": "Splendor",
-        #                 "value": splendor,
-        #             },
-        #             {
-        #                 "trait_type": "Energy",
-        #                 "value": round(energy, 1),
-        #             },
-        #         ]
-        #     }
-        #     with open('./metadata/' + str(value), 'w') as outfile:
-        #         json.dump(token, outfile, indent=4)
-        # else:
-        #     os.remove('./results/' + str(value) + '.png')
+            token = {
+                "image": datums['uploadURL'] + '/' + str(value) + '.gif',
+                "tokenId": str(value),
+                "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
+                "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+                "attributes": [
+                    {
+                        "trait_type": "Stripe",
+                        "value": stripe_s,
+                    },
+                    {
+                        "trait_type": "Cycle",
+                        "value": ncycle,
+                    },
+                    {
+                        "trait_type": "Step",
+                        "value": step_s,
+                    },
+                    {
+                        "trait_type": "Zoom",
+                        "value": zoom,
+                    },
+                    {
+                        "trait_type": "Color",
+                        "value": dominant_color_name,
+                    },
+                    {
+                        "trait_type": "Point",
+                        "value": pointName,
+                    },
+                    {
+                        "trait_type": "Location",
+                        "value": locationName,
+                    },
+                    {
+                        "trait_type": "x",
+                        "value": x,
+                    },
+                    {
+                        "trait_type": "y",
+                        "value": y,
+                    },
+                    {
+                        "trait_type": "Complexity",
+                        "value": round(complexity, 1),
+                    },
+                    {
+                        "trait_type": "Splendor",
+                        "value": splendor,
+                    },
+                    {
+                        "trait_type": "Energy",
+                        "value": round(energy, 1),
+                    },
+                ]
+            }
+            with open('./metadata/' + str(value), 'w') as outfile:
+                json.dump(token, outfile, indent=4)
+        else:
+            os.remove('./results/' + str(value) + '.gif')
 
 
 @eel.expose
