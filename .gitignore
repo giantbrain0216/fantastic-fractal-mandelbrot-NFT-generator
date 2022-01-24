@@ -116,3 +116,4 @@ dmypy.json
 /results
 /metadata
 rarities.json
+test.py
