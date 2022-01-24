@@ -268,6 +268,42 @@ $(document).ready(() => {
                             </div>
                         </div>
                         <div class="col-4"></div>`;
+    let animationOptions = `<div class="col-1"></div>
+                            <div class="col-5">
+                              <div class="card">
+                                  <div class="card-header ">
+                                  Set the number of iterations of the fractal algorithm<br>(If the number of iterations is too large, your device may be stopped.)
+                                  </div>
+                                  <div class="card-body">
+                                      <div class="input-group mb-3">
+                                          <div class="input-group-prepend">
+                                              <span class="input-group-text">Iterations</span>
+                                          </div>
+                                          <input id='maxiter' type="number" class="form-control"
+                                              onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                              min="100" value="500" step="50">
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="col-5">
+                              <div class="card">
+                                  <div class="card-header ">
+                                  Set the number of animation frames<br>(Recommended: 100~150)
+                                  </div>
+                                  <div class="card-body">
+                                      <div class="input-group mb-3">
+                                          <div class="input-group-prepend">
+                                              <span class="input-group-text">Frames</span>
+                                          </div>
+                                          <input id='frames' type="number" class="form-control"
+                                              onchange="javascript: if(Number(this.value) < Number(this.min)) this.value = this.min;"
+                                              min="100" value="150">
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="col-1"></div>`;
 
     if (val == "semi") {
       $("#optionPanel7").html(semiOptions);
@@ -277,6 +313,8 @@ $(document).ready(() => {
       $("#optionPanel7").html(auto2Options);
     } else if (val == "range") {
       $("#optionPanel7").html(rangeOptions);
+    } else if (val == "animation") {
+      $("#optionPanel7").html(animationOptions);
     }
   });
 
@@ -397,13 +435,39 @@ $(document).ready(() => {
           }
         });
       }
-    }else if (mode == "auto2") {
+    } else if (mode == "auto2") {
       let data = {
         mode: "auto2",
         repeatNum: $("#repeatNum3").val(),
         maxiter: $("#maxiter").val(),
         uploadURL: $("#uploadURL2").val(),
         imgResolution: $("#imgResolution").val(),
+      };
+
+      if (data.maxiter == "" || data.uploadURL == "") {
+        alert("Missing at coordinate or rest parameter");
+      } else {
+        $("#generate3").prop("disabled", true);
+        $("#optionPanel9 .progress-bar").addClass("progress-bar-animated");
+        $("#reset3").prop("disabled", true);
+        eel.generateFractal(JSON.stringify(data))((r) => {
+          if (r == "success") {
+            $("#optionPanel9 .progress-bar").removeClass(
+              "progress-bar-animated"
+            );
+            $("#reset3").prop("disabled", false);
+            $("#generate3").prop("disabled", false);
+          }
+        });
+      }
+    } else if (mode == "animation") {
+      let data = {
+        mode: "animation",
+        repeatNum: $("#repeatNum3").val(),
+        maxiter: $("#maxiter").val(),
+        uploadURL: $("#uploadURL2").val(),
+        imgResolution: $("#imgResolution").val(),
+        frames: $('#frames').val()
       };
 
       if (data.maxiter == "" || data.uploadURL == "") {

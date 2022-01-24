@@ -288,7 +288,7 @@ class Mandelbrot():
                       y - yrange * s,
                       y + yrange * s]
 
-    def animate(self, x, y, file_out, n_frames=150, loop=True):
+    def animate(self, x, y, file_out, n_frames=140, loop=True):
 
         def gaussian(n, sig=1):
             x = np.linspace(-1, 1, n)

@@ -2266,7 +2266,7 @@ def drawFractal(value, datums):
 
         start = timeit.default_timer()
         mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
-                          r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
+            r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
 
@@ -2387,7 +2387,7 @@ def drawFractal(value, datums):
 
         start = timeit.default_timer()
         mand = Mandelbrot(maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
-                          r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
+            r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
 
@@ -2508,7 +2508,7 @@ def drawFractal(value, datums):
 
         start = timeit.default_timer()
         mand = Mandelbrot(maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
-                          r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
+            r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
 
@@ -2710,6 +2710,126 @@ def drawFractal(value, datums):
                 json.dump(token, outfile, indent=4)
         else:
             os.remove('./results/' + str(value) + '.png')
+    if(datums['mode'] == 'animation'):
+        index = random.randint(0, len(datums['coords']) - 1)
+        x1 = float(datums['coords'][index]['xmin'])
+        x2 = float(datums['coords'][index]['xmax'])
+        y1 = float(datums['coords'][index]['ymin'])
+        y2 = float(datums['coords'][index]['ymax'])
+
+        x = (x1 + x2)/2
+        y = (y1 + y2)/2
+
+        if((x2-x1) == 0 or (y2-y1) == 0):
+            return 'Zero Division Error'
+
+        r = round(random.uniform(0, 1), 2)
+        g = round(random.uniform(0, 1), 2)
+        b = round(random.uniform(0, 1), 2)
+        maxiter = int(datums['maxiter'])
+        stripe_s = random.randint(0, 10)
+        ncycle = random.randint(1, 64)
+        step_s = random.randint(0, 10)
+        xpixels = 1280 if datums['imgResolution'] == '' else int(
+            datums['imgResolution'])
+        frames = int(datums['frames'])
+
+        start = timeit.default_timer()
+        # mand = Mandelbrot(maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
+        #     r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
+        # mand.draw('./results/' + str(value) + '.png')
+        mand = Mandelbrot(maxiter=maxiter, rgb_thetas=[
+                          r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
+        mand.animate(x, y, './results/' + str(value) + '.gif', frames)
+        stop = timeit.default_timer()
+
+        # color_thief = ColorThief('./results/' + str(value) + '.png')
+        # dominant_color = color_thief.get_color(quality=1)
+        # dominant_color_name = convert_rgb_to_names(dominant_color).capitalize()
+        # if dominant_color_name != 'Black':
+        #     centerPointX = (x2 + x1) / 2
+        #     pointName = ''
+        #     for point in pointNames:
+        #         if point['value'][0] <= centerPointX and point['value'][1] >= centerPointX:
+        #             pointName = point['name']
+
+        #     locationName = ''
+        #     zoom = int(round((xmax - xmin) * (ymax - ymin)) /
+        #                ((x2 - x1) * (y2 - y1)))
+        #     for location in locationNames:
+        #         if location['value'][0] <= zoom and location['value'][1] >= zoom:
+        #             locationName = location['name']
+
+        #     x = (x1 + x2) / 2
+        #     y = (y1 + y2) / 2
+
+        #     imgg = Image.open('./results/' + str(value) + '.png')
+
+        #     complexity = image_complexity(imgg)
+        #     splendor = image_splendor(imgg)
+        #     energy = stop-start
+
+        #     token = {
+        #         "image": datums['uploadURL'] + '/' + str(value) + '.png',
+        #         "tokenId": str(value),
+        #         "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
+        #         "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+        #         "attributes": [
+        #             {
+        #                 "trait_type": "Stripe",
+        #                 "value": stripe_s,
+        #             },
+        #             {
+        #                 "trait_type": "Cycle",
+        #                 "value": ncycle,
+        #             },
+        #             {
+        #                 "trait_type": "Step",
+        #                 "value": step_s,
+        #             },
+        #             {
+        #                 "trait_type": "Zoom",
+        #                 "value": zoom,
+        #             },
+        #             {
+        #                 "trait_type": "Color",
+        #                 "value": dominant_color_name,
+        #             },
+        #             {
+        #                 "trait_type": "Point",
+        #                 "value": pointName,
+        #             },
+        #             {
+        #                 "trait_type": "Location",
+        #                 "value": locationName,
+        #             },
+        #             {
+        #                 "trait_type": "x",
+        #                 "value": x,
+        #             },
+        #             {
+        #                 "trait_type": "y",
+        #                 "value": y,
+        #             },
+        #             {
+        #                 "trait_type": "Complexity",
+        #                 "value": round(complexity, 1),
+        #             },
+        #             {
+        #                 "trait_type": "Splendor",
+        #                 "value": splendor,
+        #             },
+        #             {
+        #                 "trait_type": "Energy",
+        #                 "value": round(energy, 1),
+        #             },
+        #         ]
+        #     }
+        #     with open('./metadata/' + str(value), 'w') as outfile:
+        #         json.dump(token, outfile, indent=4)
+        # else:
+        #     os.remove('./results/' + str(value) + '.png')
+
 
 @eel.expose
 def getRange():
