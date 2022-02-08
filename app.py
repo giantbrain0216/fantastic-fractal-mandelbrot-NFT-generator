@@ -15,6 +15,8 @@ from webcolors import (
 from PIL import Image
 import math
 import timeit
+import secrets
+import time
 
 number_of_cpu = joblib.cpu_count()
 
@@ -2300,8 +2302,13 @@ def drawFractal(value, datums):
             token = {
                 "image": datums['uploadURL'] + '/' + str(value) + '.png',
                 "tokenId": str(value),
+                "dna": secrets.token_hex(16),
                 "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
                 "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+                "date": int(time.time()),
+                "creator": "NFT Labs",
+                "artist": "NFT Labs",
+                "compiler": "NFT Labs",
                 "attributes": [
                     {
                         "trait_type": "Stripe",
@@ -2421,8 +2428,13 @@ def drawFractal(value, datums):
             token = {
                 "image": datums['uploadURL'] + '/' + str(value) + '.png',
                 "tokenId": str(value),
+                "dna": secrets.token_hex(16),
                 "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
                 "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+                "date": int(time.time()),
+                "creator": "NFT Labs",
+                "artist": "NFT Labs",
+                "compiler": "NFT Labs",
                 "attributes": [
                     {
                         "trait_type": "Stripe",
@@ -2541,8 +2553,13 @@ def drawFractal(value, datums):
             token = {
                 "image": datums['uploadURL'] + '/' + str(value) + '.png',
                 "tokenId": str(value),
+                "dna": secrets.token_hex(16),
                 "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
                 "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+                "date": int(time.time()),
+                "creator": "NFT Labs",
+                "artist": "NFT Labs",
+                "compiler": "NFT Labs",
                 "attributes": [
                     {
                         "trait_type": "Stripe",
@@ -2653,8 +2670,13 @@ def drawFractal(value, datums):
             token = {
                 "image": datums['uploadURL'] + '/' + str(value) + '.png',
                 "tokenId": str(value),
+                "dna": secrets.token_hex(16),
                 "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
                 "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+                "date": int(time.time()),
+                "creator": "NFT Labs",
+                "artist": "NFT Labs",
+                "compiler": "NFT Labs",
                 "attributes": [
                     {
                         "trait_type": "Stripe",
@@ -2769,8 +2791,13 @@ def drawFractal(value, datums):
             token = {
                 "image": datums['uploadURL'] + '/' + str(value) + '.gif',
                 "tokenId": str(value),
+                "dna": secrets.token_hex(16),
                 "name": "#" + str(value) + " " + locationName + " " + dominant_color_name + " " + pointName,
                 "description": dominant_color_name + " " + pointName + " that consumed " + str(round(energy, 1)) + " of energy in a neighbourhood of the point (" + str(x) + ", " + str(y) + "), on the " + locationName + " of the Mandelbrot set",
+                "date": int(time.time()),
+                "creator": "NFT Labs",
+                "artist": "NFT Labs",
+                "compiler": "NFT Labs",
                 "attributes": [
                     {
                         "trait_type": "Stripe",
