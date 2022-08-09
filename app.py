@@ -2267,7 +2267,7 @@ def drawFractal(value, datums):
             datums['imgResolution'])
 
         start = timeit.default_timer()
-        mand = Mandelbrot(gpu=false, maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
+        mand = Mandelbrot(gpu=False, maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
             r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
@@ -2393,7 +2393,7 @@ def drawFractal(value, datums):
             0, 10) if datums['stepS'] == '' else int(datums['stepS'])
 
         start = timeit.default_timer()
-        mand = Mandelbrot(gpu=false, maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
+        mand = Mandelbrot(gpu=False, maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
             r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
@@ -2519,7 +2519,7 @@ def drawFractal(value, datums):
             datums['imgResolution'])
 
         start = timeit.default_timer()
-        mand = Mandelbrot(gpu=false, maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
+        mand = Mandelbrot(gpu=False, maxiter=int(datums['maxiter']), coord=[x1, x2, y1, y2], rgb_thetas=[
             r, g, b], stripe_s=step_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
@@ -2636,7 +2636,7 @@ def drawFractal(value, datums):
             datums['imgResolution'])
 
         start = timeit.default_timer()
-        mand = Mandelbrot(gpu=false, maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
+        mand = Mandelbrot(gpu=False, maxiter=maxiter, coord=[x1, x2, y1, y2], rgb_thetas=[
             r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.draw('./results/' + str(value) + '.png')
         stop = timeit.default_timer()
@@ -2757,7 +2757,7 @@ def drawFractal(value, datums):
         frames = int(datums['frames'])
 
         start = timeit.default_timer()
-        mand = Mandelbrot(gpu=false, maxiter=maxiter, rgb_thetas=[
+        mand = Mandelbrot(gpu=False, maxiter=maxiter, rgb_thetas=[
                           r, g, b], stripe_s=stripe_s, ncycle=ncycle, step_s=step_s, xpixels=xpixels)
         mand.animate(x, y, './results/' + str(value) + '.gif', frames)
         stop = timeit.default_timer()
@@ -2857,7 +2857,7 @@ def drawFractal(value, datums):
 
 @eel.expose
 def getRange():
-    mand = Mandelbrot(gpu=false)
+    mand = Mandelbrot(gpu=False)
     mand.explore()
     return json.dumps(mand.range)
 
