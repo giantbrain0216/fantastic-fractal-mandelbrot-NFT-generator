@@ -1,6 +1,6 @@
 # Generating fantastic Mandelbrot Set fractal images and metafiles for NFT
 
-<u>**This app is showing how to generate random image and metafiles for.👍**</u>
+<u>**This app is showing how to generate random image and metafiles for Fractal NFTs.👍**</u>
 
 
 
